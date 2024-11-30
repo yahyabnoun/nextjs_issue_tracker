@@ -1,6 +1,5 @@
 'use client'
 import Link from 'next/link'
-import React from 'react'
 import { AiFillBug } from 'react-icons/ai'
 import { usePathname } from 'next/navigation'
 import classnames from 'classnames'
