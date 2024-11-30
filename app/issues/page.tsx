@@ -3,7 +3,7 @@ import prisma from '@/prisma/client'
 import delay from 'delay'
 import IssueActions from './_components/IssueActions'
 
-import { IssueStatusBadge, ErrorMessage } from '@/app/components'
+import { IssueStatusBadge } from '@/app/components'
 
 const IssuesPage = async () => {
   const issues = await prisma.issue.findMany()
@@ -45,5 +45,7 @@ const IssuesPage = async () => {
     </div>
   )
 }
+
+// export const dynamic = "force-dynamic"
 
 export default IssuesPage

@@ -8,7 +8,6 @@ interface Props {
     id: string
   }
 }
-
 const EditIssuePage = async( {params} : Props) => {
   const issueId = await params
 
