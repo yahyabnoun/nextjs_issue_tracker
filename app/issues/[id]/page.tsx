@@ -29,12 +29,12 @@ const page = async ({ params }: Props) => {
       <div>
         <Heading>{issue?.title}</Heading>
 
-        <Flex gap='3'>
+        <Flex gap='3' >
           <IssueStatusBadge status={issue.status} />
           <p>{issue?.createdAt.toDateString()}</p>
 
         </Flex>
-        <Card className='prose'>
+        <Card className='prose mt-4'>
           <ReactMarkdown>{issue?.description}</ReactMarkdown>
         </Card>
       </div>

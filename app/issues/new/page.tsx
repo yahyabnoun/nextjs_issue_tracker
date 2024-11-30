@@ -16,13 +16,13 @@ import { useState } from 'react';
 type IssueForm = z.infer<typeof createIssueSchema>;
 
 const NewIssuesPage = () => {
+
     const router = useRouter();
     const [errorserver, setErrorServer] = useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { register, control, handleSubmit, formState: { errors } } = useForm<IssueForm>(
         { resolver: zodResolver(createIssueSchema) }
     );
-
 
     const onSubmit = handleSubmit(async (data) => {
         try {
