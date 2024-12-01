@@ -1,7 +1,12 @@
+'use client'
 import { AlertDialog, Button, Flex } from '@radix-ui/themes'
+import axios from 'axios'
+import { useRouter } from 'next/navigation'
 
 
 const DeleteButton = ({ issueId }: { issueId: Number }) => {
+    const Router = useRouter()
+
     return (
         <>
             <div>
@@ -23,7 +28,11 @@ const DeleteButton = ({ issueId }: { issueId: Number }) => {
                                 </Button>
                             </AlertDialog.Cancel>
                             <AlertDialog.Action>
-                                <Button variant="solid" color="red">
+                                <Button variant="solid" color="red" onClick={() => {
+                                    axios.delete(`/api/issues/${issueId}`)
+                                    Router.push('/issues')
+                                    Router.refresh()
+                                }} >
                                     Delete Issue
                                 </Button>
                             </AlertDialog.Action>
@@ -31,8 +40,6 @@ const DeleteButton = ({ issueId }: { issueId: Number }) => {
                     </AlertDialog.Content>
                 </AlertDialog.Root>
             </div>
-
-
         </>
     )
 }
