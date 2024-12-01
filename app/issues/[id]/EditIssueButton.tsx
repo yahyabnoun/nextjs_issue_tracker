@@ -6,12 +6,15 @@ import React from 'react'
 const EditIssueButton = ({ issueId }: { issueId: Number }) => {
     return (
         <>
-            <Link href={`/issues/${issueId}/edit`}>
-                <Button>
-                    <Pencil2Icon />
-                    Edit Issue
-                </Button>
-            </Link>
+            <div>
+                <Link href={`/issues/${issueId}/edit`}>
+                    <Button >
+                        <Pencil2Icon />
+                        Edit Issue
+                    </Button>
+                </Link>
+            </div>
+
         </>
     )
 }
