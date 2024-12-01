@@ -2,6 +2,7 @@ import React from 'react'
 import IssueForm from '../../_components/IssueForm'
 import prisma from '@/prisma/client'
 import { notFound } from 'next/navigation'
+import { Container } from '@radix-ui/themes'
 
 interface Props {
   params: {
@@ -22,7 +23,9 @@ const EditIssuePage = async( {params} : Props) => {
 
   return (
     <>
+      <Container>
         <IssueForm issue={issue}/>
+      </Container>
     </>
   )
 }

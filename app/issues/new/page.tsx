@@ -1,10 +1,13 @@
 import React from 'react'
 import IssueForm from '../_components/IssueForm'
+import { Container } from '@radix-ui/themes'
 
 const NewIssuePage = () => {
   return (
     <>
-        <IssueForm/>
+    <Container>
+      <IssueForm/>
+    </Container>
     </>
   )
 }

@@ -28,7 +28,7 @@ const DeleteButton = ({ issueId }: { issueId: Number }) => {
 
     return (
         <>
-            <div>
+            
                 <AlertDialog.Root>
                     <AlertDialog.Trigger>
                         <Button disabled={isDeleting} color="red">Delete Issue
@@ -74,7 +74,7 @@ const DeleteButton = ({ issueId }: { issueId: Number }) => {
                     </AlertDialog.Content>
                 </AlertDialog.Root>
 
-            </div>
+           
         </>
     )
 }

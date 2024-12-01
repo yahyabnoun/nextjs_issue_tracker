@@ -23,19 +23,22 @@ const page = async ({ params }: Props) => {
 
   return (
     <>
-      <div>
-        <Grid columns={{ initial: '1', sm: '5' }} gap='5'>
-          <Box className='md:col-span-2'>
-            <IssueDetails issue={issue} />
-          </Box>
-          <Box >
-              <Flex gap='4'>
-                <EditIssueButton issueId={issue.id}/>
-                <DeleteButton issueId={issue.id} />
-              </Flex>
-          </Box>
-        </Grid>
-      </div>
+    <Container>
+     
+          <Grid columns={{ initial: '1', sm: '3' }} gap='5'>
+            <Box className='md:col-span-2'>
+              <IssueDetails issue={issue} />
+            </Box>
+            <Box >
+                <Flex direction='column' gap='4'>
+                  <EditIssueButton issueId={issue.id}/>
+                  <DeleteButton issueId={issue.id} />
+                </Flex>
+            </Box>
+          </Grid>
+       
+    </Container>
+
     </>
   )
 }

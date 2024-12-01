@@ -1,19 +1,19 @@
 import { Pencil2Icon } from '@radix-ui/react-icons'
-import { Button } from '@radix-ui/themes'
+import { Button, Flex } from '@radix-ui/themes'
 import Link from 'next/link'
 import React from 'react'
 
 const EditIssueButton = ({ issueId }: { issueId: Number }) => {
     return (
         <>
-            <div>
-                <Link href={`/issues/${issueId}/edit`}>
-                    <Button >
+            <Button >
+                <Link  href={`/issues/${issueId}/edit`}>
+                    <Flex align='center' gap='2'>
                         <Pencil2Icon />
-                        Edit Issue
-                    </Button>
+                           Edit Issue
+                    </Flex>
                 </Link>
-            </div>
+            </Button>
 
         </>
     )
