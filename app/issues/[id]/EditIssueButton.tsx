@@ -6,14 +6,15 @@ import React from 'react'
 const EditIssueButton = ({ issueId }: { issueId: Number }) => {
     return (
         <>
-            <Button >
-                <Link  href={`/issues/${issueId}/edit`}>
-                    <Flex align='center' gap='2'>
-                        <Pencil2Icon />
-                           Edit Issue
-                    </Flex>
-                </Link>
+        
+        <Link href={`/issues/${issueId}/edit`} passHref>
+            <Button style={{ width: '100%' }}>
+                <Flex align="center" gap="2">
+                <Pencil2Icon />
+                Edit Issue
+                </Flex>
             </Button>
+        </Link>
 
         </>
     )
