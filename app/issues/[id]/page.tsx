@@ -4,15 +4,14 @@ import { notFound } from 'next/navigation'
 import EditIssueButton from './EditIssueButton'
 import IssueDetails from './IssueDetails'
 import DeleteButton from './DeleteButton'
-import { authOptions } from '@/auth'
-import getServerSession from "next-auth";
+import { authOptions } from '@/app/auth/authOptions'
+import { getServerSession } from 'next-auth'
 interface Props { params: { id: string } }
 
 
 const page = async ({ params }: Props) => {
   const issueId = await params
   const session = await getServerSession(authOptions)
-
 
   if (typeof issueId.id !== "string" || isNaN(Number(issueId.id))) notFound()
 

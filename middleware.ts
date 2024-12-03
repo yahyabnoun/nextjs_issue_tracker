@@ -1,14 +1,16 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
- 
-// This function can be marked `async` if using `await` inside
-export function middleware(request: NextRequest) {
-  return NextResponse.redirect(new URL('/api/auth/signin', request.url))
-}
- 
-// See "Matching Paths" below to learn more
+import withAuth from "next-auth/middleware"
+import { authOptions } from "@/app/auth/authOptions"
+
+export default withAuth({
+  jwt: { decode: authOptions.jwt?.decode },
+  callbacks: {
+    authorized: ({ token }) => !!token,
+  },
+})
+
+
 export const config = {
-  matcher: [
-    '/',
-],
-}
+    matcher: [
+        "/issues/new",
+        "/issues/edit/:id+",
+    ] }
