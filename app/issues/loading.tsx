@@ -20,9 +20,9 @@ const loading = () => {
   </Table.Header>
   <Table.Body>
 
-    {issues.map(() => {
+    {issues.map((index) => {
       return (
-        <Table.Row>
+        <Table.Row key={index}>
           <Table.RowHeaderCell>
 
             <Skeleton height={20} width={100} />

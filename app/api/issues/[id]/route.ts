@@ -6,17 +6,17 @@ import { authOptions } from "@/app/auth/authOptions";
 
 export async function PATCH(request: NextRequest ,{ params }: {params: { id: string }}) {
     
-    const session = getServerSession(authOptions)
-    if (!session) {
-        return NextResponse.json({error: "Unauthorized"}, {status: 401})
-    }
+    // const session = getServerSession(authOptions)
+    // if (!session) {
+    //     return NextResponse.json({error: "Unauthorized"}, {status: 401})
+    // }
     
     const body = await request.json();
     const validation = issueSchema.safeParse(body);
     
-    if (!validation.success) {
-        return NextResponse.json({status: 400, json: validation.error.format()});
-    }
+    // if (!validation.success) {
+    //     return NextResponse.json({status: 400, json: validation.error.format()});
+    // }
 
     const issue = await prisma.issue.findUnique({
         where: { id: Number(params.id) }
@@ -28,7 +28,7 @@ export async function PATCH(request: NextRequest ,{ params }: {params: { id: str
 
     const updatedIssue = await prisma.issue.update({
         where: { id: Number(issue.id) },
-        data: { title: body.title, description: body.description }
+        data: { title: body.title, description: body.description , assignedToUserId: body.assignedToUserId}
     });
 
     return NextResponse.json(updatedIssue, { status: 200 });
