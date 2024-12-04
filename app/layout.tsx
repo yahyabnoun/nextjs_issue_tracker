@@ -5,6 +5,7 @@ import Navbar from "./Navbar";
 import { Theme } from "@radix-ui/themes";
 import { Inter } from "next/font/google";
 import AuthProvider from "./auth/Provider";
+import QueryClientProvider from "./QueryClientProvider";
 
 
 export const metadata: Metadata = {
@@ -26,12 +27,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <body>
+        <QueryClientProvider>
         <AuthProvider>
           <Theme appearance="light" accentColor="violet">
             <Navbar />
             <main className="p-5">{children}</main>
           </Theme>
           </AuthProvider>
+        </QueryClientProvider>
+
       </body>
     </html>
   );
