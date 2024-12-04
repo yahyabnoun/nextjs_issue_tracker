@@ -6,33 +6,27 @@ import axios from 'axios'
 import toast, { Toaster } from 'react-hot-toast';
 const AssigneeSelect = ({ issue }: { issue: Issue }) => {
 
-    const { data: users, isLoading, error } = useQuery<User[]>(
-        {
-            queryKey: ['users'],
-            queryFn: () => axios.get('/api/users').then(res => res.data),
-            staleTime: 1000 * 60,  // 1 minutes
-            retry: 3
-        }
-
-    )
+    const { data: users, isLoading, error } = useUsers()
 
     if (isLoading) return <Skeleton height='30px' />
 
     if (error) return null
 
+    const handleAssigneeChange = (userId: string) => {
+        const value = userId === " " ? null : userId;
+        axios.patch(`/api/issues/${issue.id}`, { assignedToUserId: value })
+            .then(() => {
+                toast.success('Assignee updated successfully');
+            })
+            .catch(() => {
+                toast.error('Failed to update assignee');
+            })
+    }
+
     return (
         <>
             <Select.Root defaultValue={issue.assignedToUserId || " "}
-                onValueChange={(userId) => {
-                    const value = userId === " " ? null : userId;
-                    axios.patch(`/api/issues/${issue.id}`, { assignedToUserId: value })
-                    .then(() => {
-                        toast.success('Assignee updated successfully');
-                    })
-                    .catch(() => {
-                        toast.error('Failed to update assignee');
-                    })
-                }} >
+                onValueChange={handleAssigneeChange} >
                 <Select.Trigger placeholder='Suggestions' />
                 <Select.Content>
                     <Select.Group>
@@ -48,5 +42,14 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
         </>
     )
 }
+
+const useUsers = () => useQuery<User[]>(
+    {
+        queryKey: ['users'],
+        queryFn: () => axios.get('/api/users').then(res => res.data),
+        staleTime: 1000 * 60 * 5,  // 5 minutes
+        retry: 3
+    }
+)
 
 export default AssigneeSelect
