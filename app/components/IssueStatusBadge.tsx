@@ -10,7 +10,7 @@ const statusMap: Record<Status, { color: 'red' | "violet" | "green", lable: stri
         color: 'violet',
         lable: 'In Progress'
     },
-    OPNE: {
+    OPEN: {
         color: 'green',
         lable: 'Open'
     }
