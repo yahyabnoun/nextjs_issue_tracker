@@ -1,25 +1,49 @@
-import { Table, Link, Container } from '@radix-ui/themes'
+import { Table, Container } from '@radix-ui/themes'
 import prisma from '@/prisma/client'
 import IssueActions from './_components/IssueActions'
 import { IssueStatusBadge } from '@/app/components'
-import { Status } from '@prisma/client'
+import { Issue, Status } from '@prisma/client'
+import Link from 'next/link'
+import { ArrowUpIcon } from '@radix-ui/react-icons'
 
 interface Props {
-  searchParams : {
+  searchParams: {
     status: Status
-  
+    orderBy: keyof Issue
   }
 }
-const IssuesPage = async ({searchParams}: Props) => {
-  const status = await searchParams
+const IssuesPage = async ({ searchParams }: Props) => {
+  const awaitedsearchParams = await searchParams
+  const status = awaitedsearchParams.status
+  const orderBy = awaitedsearchParams.orderBy
+  const columns: {
+    lable: string,
+    value: keyof Issue,
+    className?: string
+  }[] = [
+      { lable: 'Title', value: 'title' },
+      { lable: 'Status', value: 'status', className: 'hidden md:table-cell' },
+      { lable: 'Description', value: 'description', className: 'hidden md:table-cell' },
+    ]
 
+  // Validate status against allowed Status values
+  const validStatuses: Status[] = ['OPEN', 'CLOSED', 'IN_PROGRESS'];
+  const isValidStatus = status ? validStatuses.includes(status) : false;
+  
 
+    const validorderBy = columns.map(column => column.value)
+    const isValidOrderBy = orderBy ? validorderBy.includes(orderBy) : false
+    const orderByValue =  isValidOrderBy ?  { [orderBy]: 'asc' as const } : { 'title': 'asc' as const }
+
+    console.log(orderByValue);
+    
   // Properly filter issues based on status
   const issues = await prisma.issue.findMany(
     {
       where: {
-        status: status.status || undefined
-      }
+        ...(isValidStatus && { status }), // Apply status filter only if valid
+      },
+      orderBy: orderByValue,
     }
   )
 
@@ -31,9 +55,22 @@ const IssuesPage = async ({searchParams}: Props) => {
         <Table.Root variant="surface">
           <Table.Header>
             <Table.Row>
-              <Table.ColumnHeaderCell>Title</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell className='hidden md:table-cell'>Status</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell className='hidden md:table-cell'>Description</Table.ColumnHeaderCell>
+              {
+                columns.map((column) => (
+                  <Table.ColumnHeaderCell key={column.value} className={column.className}>
+                    <Link href={
+                      {
+                        query: { ...awaitedsearchParams,
+                          orderBy: column.value
+                        }
+                      }
+                    }>{column.lable}
+                    { column.value == orderBy && <ArrowUpIcon className='inline'/>}
+                    
+                    </Link>
+                  </Table.ColumnHeaderCell>
+                ))
+              }
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -42,7 +79,7 @@ const IssuesPage = async ({searchParams}: Props) => {
               return (
                 <Table.Row key={issue.id}>
                   <Table.RowHeaderCell>
-                    <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
+                    <Link className='text-violet-800' href={`/issues/${issue.id}`}>{issue.title}</Link>
                     <div className='block md:hidden'>
                       {issue.status}
                     </div>
