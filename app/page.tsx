@@ -1,9 +1,15 @@
+import { Container } from "@radix-ui/themes";
+import Paginition from "./components/Paginition";
 
 
 export default function Home() {
   return (
     < >
-        <h1>Hello page</h1>
+      <Container>
+      
+        <Paginition itemCount={10} pageSize={2} currentPage={1} />
+      </Container>
+        
     </>
   );
 }

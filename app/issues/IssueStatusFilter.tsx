@@ -13,10 +13,12 @@ const IssueStatusFilter = () => {
         { label: 'Closed', value: 'CLOSED' },
         { label: 'In Progress', value: 'IN_PROGRESS' },
     ]
-
+    const defaultStatus = searchParams.get('status')
+     
+    
     return (
         <>
-            <Select.Root defaultValue={ searchParams.get('status') || ' '  } onValueChange={(status) => {
+            <Select.Root defaultValue={ defaultStatus || ' '  } onValueChange={(status) => {
                 if (status !== ' ') params.append('status', status)
                 if (searchParams.get('orderBy'))   params.append('orderBy', searchParams.get('orderBy')!)
                 
